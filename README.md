@@ -1,11 +1,43 @@
-# Aerodrome Emissions Diagnostic Queries
+# Aerodrome Emissions Calculator
 
-## Problem
-The voting results from our queries don't match the official Aerodrome website (https://aerodrome.finance/vote).
+## 🎯 SOLUTION FOUND: Gauge-Based Voting System
+
+**The Issue:** Users vote on GAUGES, not pools directly!
+
+The "pool" field in `voter_evt_voted` events is actually a **GAUGE address**, not a pool address. We need to map gauges to pools using `voter_evt_gaugecreated` events.
+
+### ✅ Use This Query: `aerodrome_emissions_with_gauges.sql`
+
+This corrected query:
+1. Maps gauge addresses to pool addresses using `voter_evt_gaugecreated`
+2. Aggregates votes by actual pool (multiple gauges can point to same pool)
+3. Should now match aerodrome.finance/vote rankings
+
+---
+
+## Previous Problem (Now Solved)
+The voting results from our queries didn't match the official Aerodrome website (https://aerodrome.finance/vote).
 - Website shows: SUMR/USDC as top pool
-- Our query shows: WETH/msETH as top pool
+- Previous query shows: WETH/msETH as top pool
+- **Root Cause:** Not mapping gauges to pools
 
-## Diagnostic Queries to Run (In Order)
+---
+
+## Transaction Analysis Queries (To Verify Gauge System)
+
+### 1. `analyze_tx.sql` - Analyze Your Actual Vote
+Analyzes transaction: `0x89f179ee4bdbc112fd2388bb54d3aa64139522d4c05284908d7ecb077f36e0a1`
+- Shows the voted address (gauge)
+- Checks if it matches FUN/USDC pool or gauge
+
+### 2. `gauge_mapping_check.sql` - Verify Gauge -> Pool Mapping
+- Gets all gauge creation events
+- Maps your vote to the actual pool via gauge
+- Confirms the gauge system theory
+
+---
+
+## Alternative Diagnostic Queries (For Deep Debugging)
 
 ### 1. `check_gauge_system.sql` - CRITICAL
 **Run this FIRST** to understand the data structure.
