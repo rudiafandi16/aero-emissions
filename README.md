@@ -125,15 +125,20 @@ Once you run these queries and share the results, I can:
 
 ## Files in this Repo
 
-### Main Queries (Use After Fix)
-- `aerodrome_emissions_fixed.sql` - Full emissions calculator with investment analysis
-- `aerodrome_emissions_combined.sql` - Alternative version with different structure
+### ✅ USE THIS QUERY
+- **`aerodrome_emissions_with_gauges.sql`** - CORRECT query using gauge -> pool mapping
 
-### Diagnostic Queries (For Debugging)
-- `check_gauge_system.sql` - Check data structure
-- `deep_diagnostic.sql` - Test aggregation methods
-- `focused_pool_diagnostic.sql` - Trace specific pools
-- `diagnostic_voting_query.sql` - Current implementation test
+### Transaction Analysis (To Verify)
+- `analyze_tx.sql` - Analyzes your actual FUN/USDC vote transaction
+- `gauge_mapping_check.sql` - Verifies gauge -> pool mapping works
 
-### Original Queries (Reference)
-- `aerodrome_emissions_query.sql` - Original query (has epoch filter bug)
+### Deep Diagnostic Queries (For Research)
+- `check_gauge_system.sql` - Lists all available tables and contracts
+- `deep_diagnostic.sql` - Tests different aggregation methods
+- `focused_pool_diagnostic.sql` - Compares SUMR/USDC vs WETH/msETH
+- `diagnostic_voting_query.sql` - Tests current implementation
+
+### Previous Attempts (Reference Only - Don't Use)
+- `aerodrome_emissions_query.sql` - Original query (epoch filter bug)
+- `aerodrome_emissions_fixed.sql` - Fixed epoch but missing gauge mapping
+- `aerodrome_emissions_combined.sql` - Combined version but missing gauge mapping
